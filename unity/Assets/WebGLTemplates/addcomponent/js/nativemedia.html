@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Native Media</title>
+</head>
+
+<body>
+
+    <div style="float:left;">
+
+        <div id="unity">
+            <input id="maxSize" type="text" value="-1"></input>
+            <button onclick="testEnableCamera()">CAMERA</button>
+            <button onclick="testSelectImage()">SELECT</button>
+            </br>
+
+            <!-- SIMULATING THE UNITY WINDOW -->
+            <p>UNITY WINDOW</p>
+            <canvas id="canvas" width="320px" height="240px" style="background-color:#F2F2F2"></canvas>
+
+            <p>RESULT IMAGE</p>
+            <img id="unityImage" width="320px" height="240px" style="background-color:#F2F2F2; object-fit:contain">
+
+        </div>
+
+        <!-- NATIVE MEDIA ELEMENTS -->
+        <div id="video" style="display:none;clip-path:inset(10px, 10px, 10px, 10px);">
+            <button id="buttonClose">CLOSE</button>
+            <button id="buttonPause">PAUSE</button>
+            <button id="buttonResume">RESUME</button>
+            <button id="buttonSave">SAVE</button>
+            </br>
+            <p>CAMERA WINDOW</p>
+            <video id="stream" width="320px" height="240px"></video>
+        </div>
+
+        <!-- HIDDEN ELEMENT TO DRAW THE IMAGE -->
+        <canvas id="imageCanvas" style="display:none"></canvas>
+
+        <!-- CANVAS ELEMENT TO OPEN SELECT IMAGE -->
+        <input id="input" type="file" style="visibility:hidden"></input>
+
+    </div>
+
+    <!-- LOG SECTION -->
+    <div style="float:left;width:512px;word-wrap:break-word;margin:10px">
+        <p>LOG</p>
+        <p id="log"></p>
+    </div>
+
+    <script src="./nativemedia.js"></script>
+    <script type='text/javascript'>
+        var input = document.getElementById("maxSize");
+        var resultImage = document.getElementById("unityImage");
+        var logElement = document.getElementById("log");
+
+        function testEnableCamera() {
+            // CALL ENABLE CAMERA METHOD ON JS
+            enableCamera(false, input.value, "gameObject", "callback");
+        }
+
+        function testSelectImage() {
+            // CALL SELECT IMAGE METHOD ON JS
+            selectImage(input.value, "gameObject", "callback");
+        }
+
+        function SendMessage(gameObject, method, param) {
+            // CATCH THE "RESPONSES TO UNITY" AND LOG THEM
+            var json = param;
+
+            try {
+                json = JSON.parse(param);
+
+                if (json.success && json.image !== null) {
+                    resultImage.src = json.image;
+                } else {
+                    logElement.innerHTML += param + "</br>";
+                }
+
+            } catch (e) {
+                logElement.innerHTML += param + "</br>";
+            }
+        }
+    </script>
+</body>
+
+</html>

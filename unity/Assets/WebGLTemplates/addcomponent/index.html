@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Add Component Native</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <script src="TemplateData/UnityProgress.js"></script>
+  </head>
+  <body class="template">
+    <div class="template-wrap clear">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="960px" width="640px"></canvas>
+    </div>
+
+    <div id="video" style="display:none">
+        <video id="stream"></video>
+        <div id="buttonWrapper">
+          <button id="buttonClose">
+            <img id="iconClose" src="img/icon-close.png">
+          </button>
+          <button id="buttonPause" class="button">PAUSE</button>
+          <button id="buttonResume" class="button">RESUME</button>
+          <button id="buttonSave" class="button">SAVE</button>
+        </div>
+    </div>
+    <canvas id="imageCanvas" style="display:none"></canvas>
+    <input id="input" type="file" style="visibility:hidden"></input>
+
+    <script src="js/nativemedia.js"></script>
+
+    %UNITY_WEBGL_LOADER_GLUE%
+
+  </body>
+</html>
